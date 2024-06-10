@@ -1,12 +1,14 @@
 package com.example.no0001.Services;
 
+import com.example.no0001.Domain.Sudoku;
 import org.springframework.stereotype.Service;
-
-import javax.annotation.processing.Generated;
-import java.util.ArrayList;
 
 @Service
 public interface SudokuGen {
     //数独生成算法
-    ArrayList<ArrayList<Integer>> SudokuGenerated();
+    Sudoku SudokuGenerated();
+    //随机挖空
+    Sudoku KillNum(Sudoku sudoku);
+    //获取解
+    boolean GetSolver(Sudoku sudoku);
 }
