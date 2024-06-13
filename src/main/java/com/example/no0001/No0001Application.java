@@ -2,17 +2,12 @@ package com.example.no0001;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 
-@SpringBootApplication
+@SpringBootApplication(exclude = {SecurityAutoConfiguration.class})
 public class No0001Application {
-
     public static void main(String[] args) {
-        //sudoku
-        /**
-         * 图片识别
-         * 解决数独
-         * 创建数独
-         */
+
         SpringApplication.run(No0001Application.class, args);
     }
 

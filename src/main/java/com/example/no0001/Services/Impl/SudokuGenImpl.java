@@ -1,124 +1,26 @@
 package com.example.no0001.Services.Impl;
 
-import com.example.no0001.Domain.Sudoku;
+import com.example.no0001.Domain.Ser.Sudoku;
+import com.example.no0001.Domain.Trans.SudokuTrans;
 import com.example.no0001.Services.SudokuGen;
+import com.example.no0001.Utils.SudokuUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
 
 @Service
 public class SudokuGenImpl implements SudokuGen {
-    private int time=0;
-    Random random = new Random();
-    ArrayList<ArrayList<Integer>> can = new ArrayList<>();
-    {
-        for (int i = 0; i < 81; i++) {
-            can.add(new ArrayList<>());
-        }
-    }
+private final SudokuUtils sudokuUtils=new SudokuUtils();
     @Override
-    public Sudoku SudokuGenerated() {
-        Random r = new Random();
+    public SudokuTrans GetNewSudoku(int userId) {
+        Sudoku sudoku = sudokuUtils.SudokuGenerated();
+        Sudoku sudoku1 = sudokuUtils.KillNum(sudoku);
+        sudoku1.FinalShow();
+        //存入数据库
 
-        ArrayList<Integer> exchangeMode = new ArrayList<>();
-        for (int i = 0; i < 33; i++) {
-            exchangeMode.add(r.nextInt(4));
-        }
+        //获取
+        SudokuTrans sudokuTrans = new SudokuTrans(sudoku);
 
-        Collections.shuffle(exchangeMode);//原始算法   (可修改)
-
-        return new Sudoku(exchangeMode);
-    }
-
-    @Override
-    public Sudoku KillNum(Sudoku sudoku) {
-
-
-
-        int[][] gong = sudoku.getGong();
-        Sudoku sudoku1=new Sudoku();
-        sudoku1.setGong(gong);
-        sudoku1.UpdateRowAndColumn();
-        System.out.println("刚开始的肃毒列表");
-        sudoku.FinalShow();
-        int num = 0;
-        while (num <= 36) {
-            int anInt = random.nextInt(81);
-            if (gong[anInt / 9][anInt % 9] == 0) {
-                continue;
-            }
-            gong[anInt / 9][anInt % 9] = 0;
-            num++;
-        }
-        sudoku1.setGong(gong);
-        sudoku1.UpdateRowAndColumn();
-        boolean solver = GetSolver(sudoku1);
-        if (solver){
-            System.out.println("成功生成");
-            sudoku1.FinalShow();
-        }else {
-//            if (time>=2){
-//                System.out.println("失败");
-//                return sudoku;
-//            }
-            time++;
-            System.out.println("第"+time+"次进行挖空");
-            KillNum(sudoku);
-        }
-        return sudoku1;
-    }
-
-    @Override
-    public boolean GetSolver(Sudoku sudoku) {
-        System.out.println("第"+time+"次进行求解");
-//        int [][][] can=new int[9][9][9];
-        int num = 36;
-
-
-        Sudoku sudoku1=new Sudoku();
-        sudoku1.setGong(sudoku.getGong());
-        sudoku1.UpdateRowAndColumn();
-
-        int[][] gong = sudoku1.getGong();
-        int[][] hang = sudoku1.getHang();
-        int[][] lie = sudoku1.getLie();
-
-        int temp=0;
-        while (num > 0) {
-            if (temp>=5){
-                return false;
-            }
-            for (int i = 0; i < 9; i++) {
-                for (int j = 0; j < 9; j++) {
-                    if (gong[i / 3 * 3 + j / 3][i % 3 * 3 + j % 3] != 0) {
-                        continue;
-                    }
-                    for (int k = 1; k <= 9; k++) {
-                        if (canIn(i / 3 * 3 + j / 3,gong,k)&&canIn(i,hang,k)&&canIn(j,lie,k)){
-                            can.get(i*9+j).add(k);
-                        }
-                    }
-                    if (can.get(i*9+j).size()==1){
-                        gong[i / 3 * 3 + j / 3][i % 3 * 3 + j % 3]=can.get(i*9+j).get(0);
-                        hang[i][j]=can.get(i*9+j).get(0);
-                        lie[j][i]=can.get(i*9+j).get(0);
-                        num--;
-                    }
-                    can.get(i*9+j).clear();
-                }
-            }
-            temp++;
-        }
-
-        return true;
-    }
-
-    boolean canIn(int target, int[][] need, int num) {
-        for (int j = 0; j < 9; j++) {
-            if (need[target][j] == num) {
-                return false;
-            }
-        }
-        return true;
+        return null;
     }
 }

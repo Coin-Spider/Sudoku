@@ -1,4 +1,4 @@
-package com.example.no0001.Domain;
+package com.example.no0001.Domain.Ser;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -7,11 +7,14 @@ import java.util.Random;
 
 public class Sudoku {
     private int SudokuId;
+    private int userId;
+
     private int[][] Gong = new int[9][9];
-    private int[][] Column_T = new int[3][3];
-    private int[][] Row_T = new int[3][3];
     private int[][] Hang = new int[9][9];
     private int[][] Lie = new int[9][9];
+
+    private int[][] Column_T = new int[3][3];
+    private int[][] Row_T = new int[3][3];
     private HashMap<Integer, Integer> exId = new HashMap<>();
     {
         //交换的序列(宫,行,列)
@@ -22,6 +25,13 @@ public class Sudoku {
 
     private final Random r = new Random();
 
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
     public int getSudokuId() {
         return SudokuId;
     }

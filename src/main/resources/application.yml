@@ -1,0 +1,11 @@
+server:
+  port: 8182
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/sudoku?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=GMT%2b8&allowPublicKeyRetrieval=true&nullCatalogMeansCurrent=true
+    username: root
+    password: winhulin
+mybatis:
+  mapper-locations: classpath:Dao.*Mapper.xml
+  type-aliases-package: com.example.no0001.Domain.Ser

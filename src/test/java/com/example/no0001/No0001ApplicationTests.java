@@ -1,14 +1,11 @@
 package com.example.no0001;
 
-import com.example.no0001.Domain.Sudoku;
+import com.auth0.jwt.JWT;
+import com.example.no0001.Domain.Ser.Sudoku;
 import com.example.no0001.Services.Impl.SudokuGenImpl;
-import com.example.no0001.Services.SudokuGen;
+import com.example.no0001.Utils.JwtUtils;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Random;
 
 @SpringBootTest
 class No0001ApplicationTests {
@@ -18,11 +15,8 @@ class No0001ApplicationTests {
     }
 
     public static void main(String[] args) {
-
-        Sudoku sudoku = new SudokuGenImpl().SudokuGenerated();
-        Sudoku sudoku1 = new SudokuGenImpl().KillNum(sudoku);
-//        new SudokuGenImpl().GetSolver(sudoku1);
-        System.out.println("结果:");
-        sudoku1.FinalShow();
+        String token = new JwtUtils().getToken(1, "Rum");
+        System.out.println(token);
+        System.out.println(JWT.decode(token).getExpiresAt());
     }
 }
